@@ -7,7 +7,6 @@ system('mode con: cols=90 lines=50') # screen size
 #--------------------------------------------------------------------
 # DATA
 #--------------------------------------------------------------------
-#******************************#
     # location data
 locations = {\
     'empty' : {'name': 'an empty room', 'east': 'bedroom', 'north': 'temple',
@@ -103,8 +102,6 @@ win = False
 #--------------------------------------------------------------------
 # FUNCTIONS
 #--------------------------------------------------------------------
-
-#******************************#
     # clear screen
 def clear():
     if name == 'nt': 
@@ -134,16 +131,14 @@ def displayLocation():
 #--------------------------------------------------------------------           
 # GAME LOGIC
 #--------------------------------------------------------------------
-clear()
-#******************************#
     # character select
 #while not quitGame:
 #    if quitGame == True:
 #        break
-#
 
 #******************************#
     # main game loop
+clear()
 while not quitGame:
     if quitGame == True:
         break
@@ -153,11 +148,11 @@ while not quitGame:
     displayUI()
 
 #******************************#
-      # display current location
+      # display location
     displayLocation()
 
 #******************************#
-      # display movable objects
+      # display objects
     if current_location['contents']:
         print('\tIn the room are: {}'.format(', '.join(current_location['contents'])))
 
@@ -172,7 +167,6 @@ while not quitGame:
         if command in current_location:
             current_location = locations[current_location[command]]
         else:
-              # bad movement
             print("You can't go that way.")
 
 #******************************#
@@ -217,7 +211,8 @@ while not quitGame:
                         break 
             if winCheck == 3:
                 quitGame = True
-                win = True 
+                win = True
+                
 #******************************#
       # bad command
     else:
@@ -231,7 +226,7 @@ while not quitGame:
 if win == True:
     print("You have won the game!")
 else:
-    print("Thanks for playing!") # the user quits
+    print("Thanks for playing!")
 
 
 
