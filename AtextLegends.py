@@ -8,59 +8,14 @@ system('mode con: cols=90 lines=50') # screen size
 # DATA
 #--------------------------------------------------------------------
     # initialize location
-'''
-current_location = locations['empty'] 
-
-    # initialize weapons
-weapon0 = weapons['melee'] 
-weapon1 = weapons['melee']
-
-    # ui and game stats
-stats = gameStats['stats']
-ui = userInterface['design']
-'''
     # game variables
 inventory = [] 
 quitGame = False 
 win = False
- 
-#--------------------------------------------------------------------
-# FUNCTIONS
-#--------------------------------------------------------------------
-'''    # clear screen
-def clear():
-    if name == 'nt': 
-        _ = system('cls')
-        
-        
-    # user interface    
-def displayUI():
-    print(ui['bar'])
 
-    print(ui['health'], stats['health'],
-          ui['shield'], stats['shield'],
-          ui['tactical'], stats['tactical'],
-          ui['ultimate'], stats['ultimate'],
-          ui['ring'], stats['ring'],
-          ui['weapons0'], weapon0['uiName'], 
-          stats['ammo0'], ui['weapons1'],
-          weapon0['uiName'], stats['ammo1'], 
-          ui['weapons1'], ui['location'])
-          
-
-    # display location
-def displayLocation():
-    print('\tYou are in {}.'.format(current_location['name']))
-    print(current_location['deftext'])
-'''
 #--------------------------------------------------------------------           
 # GAME LOGIC
 #--------------------------------------------------------------------
-    # character select
-#while not quitGame:
-#    if quitGame == True:
-#        break
-
     # main game loop
 clear()
 while not quitGame:

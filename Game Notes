@@ -1,0 +1,288 @@
+Atext Legends
+
+Game Start:
+1) Choose Character
+2) Choose Landing Location
+
+Game loop:
+3) Search for Loot
+4) Fight or evade other teams
+5) Move as the ring closes
+
+Win Condition:
+1) Be the last team alive.
+
+Issues:
+1) Should there be full squads? How are characters controlled?
+	a) I think the game will be duo's first.
+		i) This makes it easier to incorporate point b.
+	b) Your team mates can help you, but thier effectiveness is based on interactions
+	you have between battles. 
+	    i) When you talk to characters between battles you, if you choose the correct
+		dialog options, then the chance that they help you increases (teamwork stat?)
+2) How do gunfights work?
+	I think guns should have multiple stats so as to account for context within combat. 
+	for example, the Mastiff Vs the Mozambique. The Mozambique is a weaker gun, so it would have
+	a lower combat power, but it is still a shotgun like the Mastiff, so both should be more effective indoors
+	vs outdoors. 
+3) How does aim, environmental factors, and abilities affect combat?
+
+4) How do I handle buildings? 
+	Being inside of a building vs outside of a building should definitely affect the game. 
+	it would render ultimates like Gibralter's ineffective, and would make weapon selections 
+	like a shotgun vs a second assault rifle worth the sacrifice of being limited at long range,
+	as shotguns would be more effective at closer ranges, which are in turn facilitated by being 
+	indoors. 
+	
+	I don't think this necessarily needs to affect the current code base. A boolean value to determine
+	if the current location is indoors or outdoors would suffice. In certain situations, like for example, 
+	Skulltown, I think it makes sense to treat the whole area as if it were indoors, but with a rooftop check
+	that would act as a combination high ground advantage and vulnerability. 
+	
+	It then becomes apparent that for this system to be implemented, each building that is accessable to the player, 
+	and indeed any cover that can be taken, must also come with it's own set of default texts. The fear is that as these
+	scale, the nesting of dictionaries would become necessary to account for added context. 
+	
+	However, I think these fears will prove to be unfounded, as the level of abstraction used 
+	reduces game context down to statistics on the liklihood of particular consequences from decisions. Ultimately, 
+	There is still a traceable path between the events that occur and a small number of outcomes. Even if the liklihood
+	of an occurence is random, the occurences themselves are not, and instead lend themselves to the effectiveness of the 
+	overall game loop. 
+
+Does the current code scale?
+There are two ways to do this game. One requires that the game be driven by user commands. 
+The other is just a system of choices. The choices option would be easier as I wouldn't
+need to account for user error as much. In addition, I think the conversation mechanic
+would really only work if there were player choices. 
+
+Player freedom is going to be difficult to balance. Giving them more choices would 
+be good for the player feeling like they have control, no 
+moments of "Bullshit, I could've" or anything like that. 
+
+However, as the freedom of choice and therefore complexity of the game goes up,
+I feel like users could get overwhelmed and not necessarily 
+
+Player choices could change based on whether the player is in combat or not. 
+
+Out of Combat:
+1) Search for Loot 
+2) Talk to team 
+3) Use abilities if they are relavent outside of combat
+4) Use items for healing
+5) Revive team mates 
+ 
+In Combat:
+1) Shoot
+2) Loot 
+3) Pickup knocked team mates 
+4) Run Away
+5) Use abilities
+6) Take cover or get highground (if applicable)
+7) Use items for healing. 
+
+Going back into the code, I've decided that the game can work as an expansion off the
+current archetecture and design. That being said, I think it then becomes petinent to add a 
+help screen so that the objectives are clear. 
+
+Also a gui needs to be designed so time sensitive components of the game can be made obvious, 
+such as the ring closing, and ui elements that are necessary to decision making are more visible,
+like the number of bullets one is carrying, and your current health, shield, and ability charges. 
+
+The gameplay loop as described here seems to lend itself to a roguelike. 
+Each decision would come with a set of percenteges that would describe the dangers
+and the potential benefits of each action. 
+
+The key to simulating the game is getting a good balance between fights and looting. 
+You can make the initial risk of going to a high loot location, but it comes with the
+risk of having to fight other teams. Going to a low population center early decreases
+the chances of landing with someone/early fights, but also decreases the chance of 
+getting kitted early.  
+-------------------------------------------------------------------------------------------
+Character and Drop Location Selection
+
+The Character Selection screen should list the characters available to get. 
+When the user picks a character, they will see stats and ability information. 
+	If it's not the right character
+		then the user backs out and tries again.
+	elif it is the right character
+		then go to drop location
+		
+		
+Bangalore:
+	Passive: Reacts quicker to enemy attack, so you get +2 when trying to engage the enemy after ambush
+	Tactical: Can use gas to increase success of whole team running away +4
+	Ultimate: Rolling Thunder increases chance of fleeing +2 or increases success of engagement +4
+
+Loba:
+	Passive: Increases chances of supply bins having good loot + 2
+	Tactical: Climbing buildings does not cost a turn.
+	Ultimate: Opens all supply bins in a location
+	
+Example Landing Screen
+
+-------------------------------------------------------------------------------
+| Health: 100 | Shield: 100 | Ring: 10 | Tactical: 100 | Ultimate: 100 |
+
+    Weapons:
+	    Alternator - 123 Rounds        R-301 - 123 Rounds	
+			    Barrel Stabalizer: +1        		
+				Extended Magazine: +1
+				Shotgun Bolt     : +1
+				Optics           : +1
+				Stock            : +1
+			
+	    R-301 - 123 Rounds
+			    Barrel Stabalizer: +1
+				Extended Magazine: +1
+				Optics           : +1
+				Stock            : +1
+				Shotgun Bolt     : +1 
+    Location:
+	    You're in Skulltown. It's quiet. Too quiet... 
+	    There are several supply bins, and loot litters the ground, 
+	    but beware, here be dragons, and great riches 
+	    bely great dangers. To the north is Sewers,
+	    and to the east is Market. 
+	
+	Next Action: loot supply bin
+
+-------------------------------------------------------------------------------
+	
+Mechanics:
+I originally thought that I would add a team building mechanic to the game
+where the player is incetivized to do a mini-dating sim basically in order
+to get Team points that determine how well your team mate listens to you. 
+
+I think this might dilute the gameplay too much if it's a whole other
+portion of the game. I think as you move to different locations, the events
+would happen somewhat randomly, and the other character on your team would 
+ask a question, and how you respond would give you team points that would affect
+whatever was going on in the location you get to. 
+This also reinfroces the rogulike aspects of the game. Apex is 
+ultimately an fps roguelike in that there is a randomized element, 
+you start out with nothing, but it stops when you die because you 
+don't retain anything upon your death. 
+
+Team points add points to whatever you try to do at the next location. 
+ 
+Gun Attatchments
+
+Barrel Stabalizer Lv2
+Ext. Heavy Mag    Lv2
+Ext. Light Mag    Lv2
+Standard Stock    Lv2
+HCOG Scope        Lv1 
+Shotgun Bolt      Lv3
+
+Alternator: Ammo - 123 Rounds
+Mastiff:    Ammo - 123 Rounds
+R-301:      Ammo - 123 Rounds
+Melee:      Ammo - 123 Rounds
+
+-----------------------------------------------------------------------------------------
+
+The next task I need to tackle is encapsulating the game logic into functions. 
+This way, if I want to change the game, I just need to add or change functions, 
+rather than altering the control-flow of the entire program. 
+
+********Start Screen********
+-------------------------------------------------------------------------------
+						Welcome to Atext Legends! 
+	
+		You take the role of a Legend, a combatant in the galaxy's 
+		greatest test of skill, strength, and luck. Your goal?
+		To eliminate or outlast every other team, claiming the title
+		of Apex Champion! Along the way, you'll collect gear, 
+		fight other teams, and explore the beautiful and 
+		dangerous King's Canyon, all while avoiding the Ring,
+		a deadly forcefield that gets smaller as you play.
+		
+		To start the game, type <start>
+		To learn more, type <help>
+		For a list of commands, type <commands>
+-------------------------------------------------------------------------------
+    Next Action: 
+
+
+
+
+
+
+
+This is the screen that displays after you've selected a character
+-------------------------------------------------------------------------------
+						Loba - High Society Thief 
+		
+		    When Loba was nine, she looked on as simulacrum
+		hitman Revenant killed her family. Left with nothing,
+		Loba survived by picking pockets. As her skills improved,
+		Loba used every tool at her disposal to lift herself from
+		the gutter. Everything changed when she broke into a
+		supposedly impenetrable facility and got her hands on
+		the Jump Drive tech stored inside. With her new
+		teleportation bracelet, the most secure and
+		unattainable items were within her reach. So was her
+		dream of living the high life.
+		
+		Tactical: Burgler's Best Friend
+			Better loot from supply bins.
+			
+		Passive : Eye for Quality
+			Loba can attain high ground with no cost.
+			
+		Ultimate: Black Market Boutique
+			Loba opens all supply bins in the current location.
+		
+		Choose Loba? (Y/N)
+-------------------------------------------------------------------------------
+		Next Action:  
+
+
+
+To Do List: 5/22/2020
+
+- I need to reorganize the weapons, stats, and ui. I don't think these really adhere to the code
+reusability standards I've set for myself, so I need to find a better solution. I think making a class, 
+especially for the game stats, the weapons, the attatchments, and the consumables, would be best. I kind 
+of got carried away with dictionaries whenever I found them, like the old saying goes, when you get a hammer,
+every problem looks like a nail.
+
+I could potentially store the data for the game stats in a tuple
+
+
+If you get an R-301 in a supply bin, the string will be passed to the main
+program.
+
+current_gun = weapons['gun']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

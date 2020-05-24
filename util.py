@@ -25,50 +25,38 @@ locations = {\
                     '\tand to the north is the torture chamber.',
         'contents': ['sheets', 'bed']}}
         
-gameStats =  {\
-    'stats': {'shield': 0, 'health': 100, 'tactical': 0, 
-              'ultimate': 0, 'ammo0': 0, 'ammo1': 0, 'ring' : 10}}
+class stats:
+    health   = 100
+    shield   =   0
+    tactical =   0
+    ultimate =   0
+    ammo0    =   0
+    ammo1    =   0
+    ring     =  10
 
-userInterface = {\
-    'design': {'bar'      : '--------------------'\
-                            '--------------------'\
-                            '--------------------'\
-                            '--------------------',
-               'shield'   : '| Shield:',
-               'health'   : '| Health:',
-               'tactical' : '| Tactical:', 
-               'ultimate' : '| Ultimate:',
-               'ring'     : '| Ring:',              
-               'weapons0' : '|\n\nWeapons:',
-               'weapons1' : ')',
-               'location' : '\n\nLocation:'}}
-               
-weapons = {\
-    'melee'  : {'uiName': '\n\tMelee:      Ammo(','name': 'Melee', 'closeRange':  8, 'midRange': 0,  'farRange':  0},
-    'mastiff': {'uiName': '\n\tMastiff:    Ammo(','name': 'Mastiff', 'closeRange': 20, 'midRange': 15, 'farRange':  9},
-    'r-301':   {'uiName': '\n\tR-301:      Ammo(','name': 'R-301', 'closeRange': 16, 'midRange': 18, 'farRange': 16}}
-    
-attatchments = {\
-    'heavyMag':    {'uiName': '\n\tExt. Heavy Mag    :  +', 'bonus': 3, 'name': 'Extended Heavy Mag'},
-    'lightMag':    {'uiName': '\n\tExt. Light Mag    :  +', 'bonus': 3, 'name': 'Extended Light Mag'},
-    'stabalizer':  {'uiName': '\n\tBarrel Stabalizer :  +', 'bonus': 2, 'name': 'Barrel Stabalizer'},
-    'stock':       {'uiName': '\n\tStandard Stock    :  +', 'bonus': 2, 'name': 'Standard Stock'},
-    'shotgunBolt': {'uiName': '\n\tShotgun Bolt      :  +', 'bonus': 2, 'name': 'Shotgun Bolt'},
-    'optics':      {'uiName': '\n\tHCOG Scope        :  +', 'bonus': 1, 'name': '1X HCOG Sights'}}
-    
-consumables = {\
-    'shield'  : {'Shield Cell':  25, 'Shield Battery': 100},
-    'health'  : {'Syringe': 25, 'Med Kit': 100},
-    'ultaccel': {'Ultimate Accelerant': 25}}
+class weapons:
+    melee   = ["Melee",    8,  0,  0]
+    r301    = ["R-301",   15, 15, 15]
+    mastiff = ["mastiff", 18, 12,  8]  
+
+class attatchments:
+    heavyMag   = ["Extended Heavy Magazine", 3]
+    lightMag   = ["Extended Light Magazine", 3]
+    stabalizer = ["Barrel Stabalizer",       2]
+    stock      = ["Standard Stock",          2]
+    bolt       = ["Shotgun Bolt",            2]
+    optics     = ["HCOG Scope",              1]
+
+class consumables:
+    shieldCell    = ["Shield Cell",     25]
+    shieldBattery = ["Shield Battery", 100]
+    syringe       = ["Syringe",         25]
+    medKit        = ["Med Kit",        100]
 
 directions = ['north', 'south', 'east', 'west']
 
 #initialization
 current_location = locations['empty']
-weapon0 = weapons['melee'] 
-weapon1 = weapons['melee']
-stats = gameStats['stats']
-ui = userInterface['design']
 
 #--------------------------------------------------------------------
 # FUNCTIONS
@@ -81,6 +69,9 @@ def clear():
         
     # user interface    
 def displayUI():
+    print('--------------------------------------------------------------------------------')
+    print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} '\
+          '|'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring))
     print(ui['bar'])
 
     print(ui['health'], stats['health'],
