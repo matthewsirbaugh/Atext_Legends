@@ -36,6 +36,14 @@ class consumables:
     syringe       = ["Syringe",         25]
     medKit        = ["Med Kit",        100]
 
+class mainMechanics(stats, rooms):
+    def movement(self):
+        if stats.command in directions:
+            if stats.command in locations[rooms.currentRoom]:
+                rooms.currentRoom = locations[rooms.currentRoom][stats.command]
+        else:
+            print("You can't go that way.")
+
 class ui(stats, weapons, attatchments, rooms):
     def clear(self):
         if name == 'nt': 
@@ -75,5 +83,10 @@ class ui(stats, weapons, attatchments, rooms):
         self.getInput()
 
 gameManager = ui()
-gameManager.displayUI()
-print(stats.command)
+mainMech = mainMechanics()
+while (1):
+    gameManager.displayUI()
+    if stats.command == 'quit':
+        break
+    mainMech.movement()
+
