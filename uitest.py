@@ -74,7 +74,24 @@ class ui(stats, weapons, attatchments, rooms):
     def displayRoom(self):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
         print(locations[rooms.currentRoom][rooms.currentText])
-    
+
+#***********************************    
+    def inventoryUI(self):
+        self.clear()
+        print('----------------------------------------'\
+              '----------------------------------------')
+        print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
+        '|\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
+        for x in reversed(range(0,3)):
+            print('\t',inventory[0][x],inventory[1][x],'\n')
+        print('    Location:')
+        self.displayRoom()
+        print('----------------------------------------'\
+              '----------------------------------------')
+        self.getInput()
+        self.quitGame()
+        
+#**********************************    
     def mainUI(self):
         self.clear()
         print('----------------------------------------'\
@@ -112,5 +129,11 @@ mainManager = mainMechanics()
 while (1):
     uiManager.mainUI()
     if uiManager.quit == True: break
-    mainManager.movement()
-
+    if uiManager.command in directions:
+        mainManager.movement()
+    if uiManager.command == 'inventory':
+        while (uiManager.command != 'exit'):
+            uiManager.inventoryUI()
+            if uiManager.quit == True: break 
+    if uiManager.quit == True: break
+print("\rThanks for playing!")
