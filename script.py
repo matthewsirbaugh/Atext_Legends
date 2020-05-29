@@ -21,3 +21,19 @@ locations = {\
         'contents': ['sheets', 'bed']}}
 
 directions = ['north', 'south', 'east', 'west']
+
+"""
+UI  = inventory[0][X]
+num = inventory[X][0]
+
+Ex.
+Shield Cell UI
+    inventory[0][2]
+Shield Cell num
+    inventory[1][2]
+"""
+inventory = [['Syringe:        X','Med Kit:        X','Shield Cell:    X','Shield Battery: X'],
+             [                  0,                  0,                  0,                  0]]
+             
+             
+             
