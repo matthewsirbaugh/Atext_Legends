@@ -2,9 +2,14 @@ from os import system, name
 from script import*
        
 class rooms:
+    # room name
     currentRoom = 'empty'
+    #location description
     currentText = 'deftext'
-
+    #currently selected item
+    currentItem = ''
+    #description text for currently selected item
+    currentItemText = 'itemtext'
 class stats:
     health   =   100
     shield   =     0
@@ -15,7 +20,13 @@ class stats:
     ring     =    10
     command  =    ''
     turn     =     1
-    weapon0  = [0,0]  #index for gun multidimensional list. (0,0) is the default melee
+
+    # index for gun multidimensional list. 
+    # (0,0) is the default melee
+    # First index is the weapon name as a string
+    # Second index can only be 0, 1, or 2.
+    #     representing a near, midrange, or far power adjustment, respectively.
+    weapon0  = [0,0]  
     weapon1  = [0,0]
 
 class weapons:
@@ -35,7 +46,8 @@ class consumables:
     shieldBattery = ["Shield Battery", 100]
     syringe       = ["Syringe",         25]
     medKit        = ["Med Kit",        100]
-
+       
+#---------------------------------------------------------
 class mainMechanics(stats, rooms):
     def movement(self):
         if stats.command in directions:
@@ -43,11 +55,18 @@ class mainMechanics(stats, rooms):
                 rooms.currentRoom = locations[rooms.currentRoom][stats.command]
         else:
             print("You can't go that way.")
-
+       
+#---------------------------------------------------------
 class ui(stats, weapons, attatchments, rooms):
+    quit = False
+    
     def clear(self):
         if name == 'nt': 
             _ = system('cls')
+       
+    def quitGame(self):
+        if stats.command == 'quit' or stats.command == 'q':
+            self.quit = True
 
     def getInput(self):
         stats.command = input('\tNext Action: ').strip()
@@ -56,7 +75,7 @@ class ui(stats, weapons, attatchments, rooms):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
         print(locations[rooms.currentRoom][rooms.currentText])
     
-    def displayUI(self):
+    def mainUI(self):
         self.clear()
         print('----------------------------------------'\
               '----------------------------------------')
@@ -81,12 +100,17 @@ class ui(stats, weapons, attatchments, rooms):
         print('----------------------------------------'\
               '----------------------------------------')
         self.getInput()
+        self.quitGame()
 
-gameManager = ui()
-mainMech = mainMechanics()
+"""
+********************************
+Main Driver
+********************************
+"""
+uiManager = ui()
+mainManager = mainMechanics()
 while (1):
-    gameManager.displayUI()
-    if stats.command == 'quit':
-        break
-    mainMech.movement()
+    uiManager.mainUI()
+    if uiManager.quit == True: break
+    mainManager.movement()
 
