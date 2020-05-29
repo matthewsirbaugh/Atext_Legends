@@ -25,15 +25,14 @@ directions = ['north', 'south', 'east', 'west']
 """
 UI  = inventory[0][X]
 num = inventory[X][0]
-
-Ex.
-Shield Cell UI
-    inventory[0][2]
-Shield Cell num
-    inventory[1][2]
+Syringe         Med Kit  
+[0][0]          [0][1]
+[1][0]          [1][1]
+Shield Cell     Shield Battery
+[0][2]          [0][3]
+[1][2]          [1][3]
 """
 inventory = [['Syringe:        X','Med Kit:        X','Shield Cell:    X','Shield Battery: X'],
              [                  0,                  0,                  0,                  0]]
              
-             
-             
+     
