@@ -19,3 +19,5 @@ locations = {\
                     '\tin a long time. To the west is the room where you awoke, \n'
                     '\tand to the north is the torture chamber.',
         'contents': ['sheets', 'bed']}}
+
+directions = ['north', 'south', 'east', 'west']
