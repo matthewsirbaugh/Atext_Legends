@@ -254,7 +254,19 @@ If you get an R-301 in a supply bin, the string will be passed to the main
 program.
 
 current_gun = weapons['gun']
+***************************************************************************************
+Having just finished making movement and a quit function, 
+the next essential item is to create a way for the player to pick up things
 
+In order to pick up things, the player needs:
+1) Things in the room to pick up.
+2) An inventory to keep things in.
+
+The inventory can be a 2d list.
+inventory = [[item names],
+			 [number in inventory]]
+			 
+create inventory class with inventory array, and keys for each consumable. 
 
 
 
