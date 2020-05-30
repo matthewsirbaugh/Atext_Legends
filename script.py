@@ -18,32 +18,32 @@ locations   = {\
                 '\tin a long time. To the west is the room where you awoke, \n'
                 '\tand to the north is the torture chamber.',
     'contents': ['syringe']}}
-
+characterList= ['loba']
 characters   = {\
 'loba'      : {'name'    :'Loba', 
                'passive' :'Eye For Quality', 
                'tactical':"Burglar's Best Friend",
                'ultimate':'Black Market Boutique',
-    'biography'   :'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
-    'passiveText' :'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
-    'tacticalText':'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
-    'ultimateText':'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
+    'biography'   :'\tbiography text\n' 
+                   '\tbiography text',
+    'passiveText' :'\tpassive text\n' 
+                   '\tpassive text',
+    'tacticalText':'\ttactical text\n' 
+                   '\ttactical text',
+    'ultimateText':'\tultimate text\n' 
+                   '\tultimate text'},
 'bangalore' : {'name'    :'Bangalore', 
                'passive' :'Double Time', 
                'tactical':'Smoke Launcher',
                'ultimate':'Rolling Thunder',
-    'biography'   :'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
-    'passiveText' :'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
-    'tacticalText':'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'},
-    'ultimateText':'\tThe stone floors and walls are cold and damp.\n' 
-                   '\tTo the north is a temple, and to the east is a bedroom.'}}
+    'biography'   :'\tbiography text\n' 
+                   '\tbiography text',
+    'passiveText' :'\t\n' 
+                   '\t',
+    'tacticalText':'\t\n' 
+                   '\t',
+    'ultimateText':'\t\n' 
+                   '\t'}}
 
 directions  = ['north', 'south', 'east', 'west']
 
@@ -57,20 +57,16 @@ consumables = ['Syringe:             X',
 UI  = inventory[0][X]
 num = inventory[X][0]
 
-Syringe    
-[0][0]
-[1][0]
-Med Kit
-[0][1]
-[1][1]
-Shield Cell
-[0][2]
-[1][2]
-Shield Battery
-[0][3]
-[1][3]
+Syringe       Med Kit    
+[0][0]        [0][1]
+[1][0]        [1][1]
+
+Shield Cell   Shield Battery
+[0][2]        [0][3]
+[1][2]        [1][3]
 """
 inventory = [['syringe','med kit','shield cell','shield battery','ultimate accelerant'],
              [        0,        0,            0,               0,                    0],
              [       25,      100,           25,             100,                   20]]
-  
+
+ 
