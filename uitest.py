@@ -55,10 +55,23 @@ class mainMechanics(stats, rooms):
                 rooms.currentRoom = locations[rooms.currentRoom][stats.command]
         else:
             print("You can't go that way.")
-       
+    
+    def pickUp(self, args):
+        if args[0] == 'get':
+            rooms.currentItem = args[1]
+        if rooms.currentItem in locations[rooms.currentRoom]['contents']:
+            locations[rooms.currentRoom]['contents'].remove(rooms.currentItem)
+            inventory[1][1] += 1
+        else:
+            print("No item like that here")
 #---------------------------------------------------------
 class ui(stats, weapons, attatchments, rooms):
     quit = False
+    exit = False
+    
+    def uiReset(self):
+        self.quit = False
+        self.exit = False
     
     def clear(self):
         if name == 'nt': 
@@ -67,9 +80,15 @@ class ui(stats, weapons, attatchments, rooms):
     def quitGame(self):
         if stats.command == 'quit' or stats.command == 'q':
             self.quit = True
+    
+    def exitMenu(self):
+        if stats.command == 'exit':
+            self.exit = True
 
     def getInput(self):
         stats.command = input('\tNext Action: ').strip()
+        command = stats.command.lower().split(' ',1)
+        return command
     
     def displayRoom(self):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
@@ -82,15 +101,17 @@ class ui(stats, weapons, attatchments, rooms):
               '----------------------------------------')
         print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
         '|\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
-        for x in reversed(range(0,3)):
+        for x in reversed(range(0,4)):
             print('\t',inventory[0][x],inventory[1][x],'\n')
         print('    Location:')
         self.displayRoom()
         print('----------------------------------------'\
               '----------------------------------------')
-        self.getInput()
-        self.quitGame()
         
+        args = self.getInput()
+        self.exitMenu()
+        
+        return args
 #**********************************    
     def mainUI(self):
         self.clear()
@@ -116,9 +137,11 @@ class ui(stats, weapons, attatchments, rooms):
         self.displayRoom()
         print('----------------------------------------'\
               '----------------------------------------')
-        self.getInput()
+        
+        args = self.getInput()
         self.quitGame()
-
+        
+        return args
 """
 ********************************
 Main Driver
@@ -126,14 +149,24 @@ Main Driver
 """
 uiManager = ui()
 mainManager = mainMechanics()
+
 while (1):
-    uiManager.mainUI()
+    command = uiManager.mainUI()
+    
     if uiManager.quit == True: break
-    if uiManager.command in directions:
+
+    if command[0] in directions:
         mainManager.movement()
-    if uiManager.command == 'inventory':
-        while (uiManager.command != 'exit'):
-            uiManager.inventoryUI()
-            if uiManager.quit == True: break 
-    if uiManager.quit == True: break
-print("\rThanks for playing!")
+        
+    while (command[0] == 'inventory'):
+        command = uiManager.inventoryUI()
+        if uiManager.exit == True: break
+        
+    if command[0] == 'get':
+        mainManager.pickUp(command)
+    
+    uiManager.uiReset()
+
+# quit screen
+print("\tThanks for playing!")
+
