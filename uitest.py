@@ -41,12 +41,6 @@ class attatchments:
     optics      = ["Optics",            0]
     stock       = ["Stock",             0]
 
-class consumables:
-    shieldCell    = ["Shield Cell",     25]
-    shieldBattery = ["Shield Battery", 100]
-    syringe       = ["Syringe",         25]
-    medKit        = ["Med Kit",        100]
-       
 #---------------------------------------------------------
 class Mechanics(stats, rooms):
     def movement(self):
@@ -61,7 +55,9 @@ class Mechanics(stats, rooms):
             rooms.currentItem = args[1]
         if rooms.currentItem in locations[rooms.currentRoom]['contents']:
             locations[rooms.currentRoom]['contents'].remove(rooms.currentItem)
+            # get index of current item
             x = [x for x in inventory if rooms.currentItem in x][0]
+            # add one to count
             inventory[1][x.index(rooms.currentItem)] += 1
         else:
             print("No item like that here")
@@ -95,16 +91,29 @@ class UI(stats, weapons, attatchments, rooms):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
         print(locations[rooms.currentRoom][rooms.currentText])
 #***********************************    
+    def characterUI(self):
+        self.clear()
+        print('----------------------------------------'\
+              '----------------------------------------')
+        
+        print('----------------------------------------'\
+              '----------------------------------------')
+        args = self.getInput()
+        self.exitMenu()
+        return args
+#***********************************    
     def inventoryUI(self):
         self.clear()
         print('----------------------------------------'\
               '----------------------------------------')
         print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
-        '|\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
-        for x in reversed(range(0,4)):
-            print('\t',inventory[0][x],inventory[1][x],'\n')
+        '|\n\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
+        for x in reversed(range(0,5)):
+            print('\t',consumables[x],inventory[1][x],'\n')
+        print('\n\n')
         print('    Location:')
         self.displayRoom()
+        print('\n')
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
@@ -162,9 +171,6 @@ while (1):
 
     #while (command[0] in commandList):
     
-    
-    
-    
     if command[0] == 'get':
         mechanic.pickUp(command)
     
@@ -172,3 +178,4 @@ while (1):
 
 # quit screen
 print("\tThanks for playing!")
+
