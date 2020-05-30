@@ -48,7 +48,7 @@ class consumables:
     medKit        = ["Med Kit",        100]
        
 #---------------------------------------------------------
-class mainMechanics(stats, rooms):
+class Mechanics(stats, rooms):
     def movement(self):
         if stats.command in directions:
             if stats.command in locations[rooms.currentRoom]:
@@ -61,11 +61,12 @@ class mainMechanics(stats, rooms):
             rooms.currentItem = args[1]
         if rooms.currentItem in locations[rooms.currentRoom]['contents']:
             locations[rooms.currentRoom]['contents'].remove(rooms.currentItem)
-            inventory[1][1] += 1
+            x = [x for x in inventory if rooms.currentItem in x][0]
+            inventory[1][x.index(rooms.currentItem)] += 1
         else:
             print("No item like that here")
 #---------------------------------------------------------
-class ui(stats, weapons, attatchments, rooms):
+class UI(stats, weapons, attatchments, rooms):
     quit = False
     exit = False
     
@@ -93,7 +94,6 @@ class ui(stats, weapons, attatchments, rooms):
     def displayRoom(self):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
         print(locations[rooms.currentRoom][rooms.currentText])
-
 #***********************************    
     def inventoryUI(self):
         self.clear()
@@ -107,10 +107,8 @@ class ui(stats, weapons, attatchments, rooms):
         self.displayRoom()
         print('----------------------------------------'\
               '----------------------------------------')
-        
         args = self.getInput()
         self.exitMenu()
-        
         return args
 #**********************************    
     def mainUI(self):
@@ -147,26 +145,30 @@ class ui(stats, weapons, attatchments, rooms):
 Main Driver
 ********************************
 """
-uiManager = ui()
-mainManager = mainMechanics()
+ui = UI()
+mechanic = Mechanics()
 
 while (1):
-    command = uiManager.mainUI()
-    
-    if uiManager.quit == True: break
+    command = ui.mainUI()
+    if ui.quit == True: break
 
     if command[0] in directions:
-        mainManager.movement()
+        mechanic.movement()
         
     while (command[0] == 'inventory'):
-        command = uiManager.inventoryUI()
-        if uiManager.exit == True: break
-        
-    if command[0] == 'get':
-        mainManager.pickUp(command)
+        command = ui.inventoryUI()
+        #if command[0] == 'use':
+        if ui.exit == True: break
+
+    #while (command[0] in commandList):
     
-    uiManager.uiReset()
+    
+    
+    
+    if command[0] == 'get':
+        mechanic.pickUp(command)
+    
+    ui.uiReset()
 
 # quit screen
 print("\tThanks for playing!")
-
