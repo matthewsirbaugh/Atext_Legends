@@ -1,6 +1,12 @@
 from os import system, name
 from script import*
-       
+
+class char:
+    currentCharacter = 'loba'
+    def getCharacter(self,args):
+        if args[0] in characterList:
+            self.currentCharacter = args[0]
+        
 class rooms:
     # room name
     currentRoom = 'empty'
@@ -10,6 +16,7 @@ class rooms:
     currentItem = ''
     #description text for currently selected item
     currentItemText = 'itemtext'
+
 class stats:
     health   =   100
     shield   =     0
@@ -48,7 +55,7 @@ class Mechanics(stats, rooms):
             if stats.command in locations[rooms.currentRoom]:
                 rooms.currentRoom = locations[rooms.currentRoom][stats.command]
         else:
-            print("You can't go that way.")
+            print("You can't go that way, friend.")
     
     def pickUp(self, args):
         if args[0] == 'get':
@@ -60,9 +67,11 @@ class Mechanics(stats, rooms):
             # add one to count
             inventory[1][x.index(rooms.currentItem)] += 1
         else:
-            print("No item like that here")
+            print("No item like that here that I can see.")
+    
+            
 #---------------------------------------------------------
-class UI(stats, weapons, attatchments, rooms):
+class UI(stats, weapons, attatchments, rooms, char):
     quit = False
     exit = False
     
@@ -96,6 +105,38 @@ class UI(stats, weapons, attatchments, rooms):
         print('----------------------------------------'\
               '----------------------------------------')
         
+        """
+        print('\t\t\t{}\n'.format(characters[char.currentCharacter]['name']))
+        print('\t    Ultimate: {}\n'.format(characters[char.currentCharacter]['ultText' ]))
+        print('\t    Tactical: {}\n'.format(characters[char.currentCharacter]['tactText']))
+        print('\t    Passive:  {}\n'.format(characters[char.currentCharacter]['passText']))
+        print('\t\t\tUse <help> to learn how to play.')
+        print('\t\tUse <commands> to see a list of usable commands.')
+        """
+        print('----------------------------------------'\
+              '----------------------------------------')
+        args = self.getInput()
+        self.exitMenu()
+        return args
+#***********************************    
+    def startUI(self):
+        self.clear()
+        print('----------------------------------------'\
+              '----------------------------------------')
+        print('\t\t\tWelcome to Atext Legends!\n')
+        print('\t    Atext Legends is the ultimate test of strength, skill,\n',
+              '\tand cunning. You must work with your team to outrun\n',
+              '\tthe Ring, claim glory on the battlefield, and earn your\n',
+              '\tplace in the Hall of Legends.')
+        print('\t    To begin, select a character to learn about thier\n',
+              '\tabilities, and confirm your selection to board the\n',
+              '\tdrop ship and enter the arena!\n')      
+        print('    Loba:')
+        print('{}\n'.format(characters['loba']['bio']))
+        print('    Bangalore:')
+        print('{}\n'.format(characters['bangalore']['bio']))
+        print('\t\t\tUse <help> to learn how to play.')
+        print('\t\tUse <commands> to see a list of usable commands.')
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
@@ -144,10 +185,8 @@ class UI(stats, weapons, attatchments, rooms):
         self.displayRoom()
         print('----------------------------------------'\
               '----------------------------------------')
-        
         args = self.getInput()
         self.quitGame()
-        
         return args
 """
 ********************************
@@ -156,7 +195,13 @@ Main Driver
 """
 ui = UI()
 mechanic = Mechanics()
+character = char()
 
+command = ui.startUI()
+character.getCharacter(command)
+print(character.currentCharacter)
+command = ui.characterUI()
+"""
 while (1):
     command = ui.mainUI()
     if ui.quit == True: break
@@ -175,7 +220,6 @@ while (1):
         mechanic.pickUp(command)
     
     ui.uiReset()
-
+"""
 # quit screen
 print("\tThanks for playing!")
-
