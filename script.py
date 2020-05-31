@@ -18,32 +18,37 @@ locations   = {\
                 '\tin a long time. To the west is the room where you awoke, \n'
                 '\tand to the north is the torture chamber.',
     'contents': ['syringe']}}
-characterList= ['loba']
+
+
+
+
+
+characterList= ['loba','bangalore']
 characters   = {\
-'loba'      : {'name'    :'Loba', 
-               'passive' :'Eye For Quality', 
-               'tactical':"Burglar's Best Friend",
-               'ultimate':'Black Market Boutique',
-    'biography'   :'\tbiography text\n' 
-                   '\tbiography text',
-    'passiveText' :'\tpassive text\n' 
-                   '\tpassive text',
-    'tacticalText':'\ttactical text\n' 
-                   '\ttactical text',
-    'ultimateText':'\tultimate text\n' 
-                   '\tultimate text'},
-'bangalore' : {'name'    :'Bangalore', 
-               'passive' :'Double Time', 
-               'tactical':'Smoke Launcher',
-               'ultimate':'Rolling Thunder',
-    'biography'   :'\tbiography text\n' 
-                   '\tbiography text',
-    'passiveText' :'\t\n' 
-                   '\t',
-    'tacticalText':'\t\n' 
-                   '\t',
-    'ultimateText':'\t\n' 
-                   '\t'}}
+'loba'     :{'name'    :'Loba', 
+             'passive' :'Eye For Quality', 
+             'tactical':"Burglar's Best Friend",
+             'ultimate':'Black Market Boutique',
+    'bio'     :'\tbiography text\n' 
+               '\tbiography text',
+    'passText':'\tpassive text\n' 
+               '\tpassive text',
+    'tactText':'\ttactical text\n' 
+               '\ttactical text',
+    'ultText' :'\tultimate text\n' 
+               '\tultimate text'},
+'bangalore':{'name'    :'Bangalore', 
+             'passive' :'Double Time', 
+             'tactical':'Smoke Launcher',
+             'ultimate':'Rolling Thunder',
+    'bio'     :'\tbiography text\n' 
+               '\tbiography text',
+    'passText':'\tpassive text\n' 
+               '\tpassive text',
+    'tactText':'\ttactical text\n' 
+               '\ttactical text',
+    'ultText' :'\tultimate text\n' 
+               '\tultimate text'}}
 
 directions  = ['north', 'south', 'east', 'west']
 
@@ -56,11 +61,9 @@ consumables = ['Syringe:             X',
 """
 UI  = inventory[0][X]
 num = inventory[X][0]
-
 Syringe       Med Kit    
 [0][0]        [0][1]
 [1][0]        [1][1]
-
 Shield Cell   Shield Battery
 [0][2]        [0][3]
 [1][2]        [1][3]
@@ -68,5 +71,3 @@ Shield Cell   Shield Battery
 inventory = [['syringe','med kit','shield cell','shield battery','ultimate accelerant'],
              [        0,        0,            0,               0,                    0],
              [       25,      100,           25,             100,                   20]]
-
- 
