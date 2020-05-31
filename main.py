@@ -100,19 +100,19 @@ class UI(stats, weapons, attatchments, rooms, char):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
         print(locations[rooms.currentRoom][rooms.currentText])
 #***********************************    
-    def characterUI(self):
+    def characterUI(self, string1):
         self.clear()
         print('----------------------------------------'\
               '----------------------------------------')
         
-        """
-        print('\t\t\t{}\n'.format(characters[char.currentCharacter]['name']))
-        print('\t    Ultimate: {}\n'.format(characters[char.currentCharacter]['ultText' ]))
-        print('\t    Tactical: {}\n'.format(characters[char.currentCharacter]['tactText']))
-        print('\t    Passive:  {}\n'.format(characters[char.currentCharacter]['passText']))
+        
+        print('\t\t\t{}\n'.format(characters[string1]['name']))
+        print('\t    Ultimate: {}\n'.format(characters[string1]['ultText' ]))
+        print('\t    Tactical: {}\n'.format(characters[string1]['tactText']))
+        print('\t    Passive:  {}\n'.format(characters[string1]['passText']))
         print('\t\t\tUse <help> to learn how to play.')
         print('\t\tUse <commands> to see a list of usable commands.')
-        """
+        
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
@@ -151,10 +151,11 @@ class UI(stats, weapons, attatchments, rooms, char):
         '|\n\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
         for x in reversed(range(0,5)):
             print('\t',consumables[x],inventory[1][x],'\n')
-        print('\n\n')
         print('    Location:')
         self.displayRoom()
         print('\n')
+        print('\t\t\tUse <help> to learn how to play.')
+        print('\t\tUse <commands> to see a list of usable commands.')
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
@@ -197,11 +198,10 @@ ui = UI()
 mechanic = Mechanics()
 character = char()
 
-command = ui.startUI()
-character.getCharacter(command)
-print(character.currentCharacter)
-command = ui.characterUI()
-"""
+#command = ui.startUI()
+#character.getCharacter(command)
+#command = ui.characterUI(character.currentCharacter)
+
 while (1):
     command = ui.mainUI()
     if ui.quit == True: break
@@ -220,6 +220,6 @@ while (1):
         mechanic.pickUp(command)
     
     ui.uiReset()
-"""
+
 # quit screen
 print("\tThanks for playing!")
