@@ -1,11 +1,6 @@
 from os import system, name
 from script import*
-
-class char:
-    currentCharacter = 'loba'
-    def getCharacter(self,args):
-        if args[0] in characterList:
-            self.currentCharacter = args[0]
+import time
         
 class rooms:
     # room name
@@ -18,15 +13,19 @@ class rooms:
     currentItemText = 'itemtext'
 
 class stats:
-    health   =   100
-    shield   =     0
-    tactical =     0
-    ultimate =     0
-    ammo0    =     0
-    ammo1    =     0
-    ring     =    10
-    command  =    ''
-    turn     =     1
+    health   =      100
+    shield   =        0
+    tactical =        0
+    ultimate =        0
+    ammo0    =        0
+    ammo1    =        0
+    ring     =        10
+    command  =        ''
+    turn     =        1
+    playerCharacter = ''
+    currentLocation = ''
+    playerSet =       False
+    locationSet =     False
 
     # index for gun multidimensional list. 
     # (0,0) is the default melee
@@ -37,9 +36,10 @@ class stats:
     weapon1  = [0,0]
 
 class weapons:
-    gun = [["Melee",    8,  0,  0],
-           ["R-301",   15, 15, 15],
-           ["Mastiff", 18, 12,  8]]  
+    gun = [\
+            ["Melee",    8,  0,  0],
+            ["R-301",   15, 15, 15],
+            ["Mastiff", 18, 12,  8]]  
 
 class attatchments:
     stabalizer  = ["Barrel Stabalizer", 0]
@@ -56,7 +56,7 @@ class Mechanics(stats, rooms):
                 rooms.currentRoom = locations[rooms.currentRoom][stats.command]
         else:
             print("You can't go that way, friend.")
-    
+
     def pickUp(self, args):
         if args[0] == 'get':
             rooms.currentItem = args[1]
@@ -68,10 +68,8 @@ class Mechanics(stats, rooms):
             inventory[1][x.index(rooms.currentItem)] += 1
         else:
             print("No item like that here that I can see.")
-    
-            
 #---------------------------------------------------------
-class UI(stats, weapons, attatchments, rooms, char):
+class UI(stats, weapons, attatchments, rooms):
     quit = False
     exit = False
     
@@ -93,31 +91,18 @@ class UI(stats, weapons, attatchments, rooms, char):
 
     def getInput(self):
         stats.command = input('\tNext Action: ').strip()
-        command = stats.command.lower().split(' ',1)
-        return command
+        args = stats.command.lower().split(' ',1)
+        try:
+            if args[1] in locationList: # script has the locations set to the
+                args[0] = args[1]       # last word if the location has two words 
+                return args
+        except IndexError: # otherwise it will throw an error
+            pass
+        return args
     
     def displayRoom(self):
         print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
         print(locations[rooms.currentRoom][rooms.currentText])
-#***********************************    
-    def characterUI(self, string1):
-        self.clear()
-        print('----------------------------------------'\
-              '----------------------------------------')
-        
-        
-        print('\t\t\t{}\n'.format(characters[string1]['name']))
-        print('\t    Ultimate: {}\n'.format(characters[string1]['ultText' ]))
-        print('\t    Tactical: {}\n'.format(characters[string1]['tactText']))
-        print('\t    Passive:  {}\n'.format(characters[string1]['passText']))
-        print('\t\t\tUse <help> to learn how to play.')
-        print('\t\tUse <commands> to see a list of usable commands.')
-        
-        print('----------------------------------------'\
-              '----------------------------------------')
-        args = self.getInput()
-        self.exitMenu()
-        return args
 #***********************************    
     def startUI(self):
         self.clear()
@@ -140,26 +125,48 @@ class UI(stats, weapons, attatchments, rooms, char):
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
-        self.exitMenu()
+        self.quitGame()
         return args
 #***********************************    
-    def inventoryUI(self):
+    def characterUI(self, args):
+        try:
+            self.clear()
+            if args[0] in characterList:
+                stats.playerCharacter = args[0]
+            print('----------------------------------------'\
+                  '----------------------------------------')
+            print('\t\t\t{}\n'.format(characters[stats.playerCharacter]['name']))
+            print('    Ultimate: {}\n'.format(characters[stats.playerCharacter]['ultText' ]))
+            print('    Tactical: {}\n'.format(characters[stats.playerCharacter]['tactText']))
+            print('    Passive:  {}\n\n\n'.format(characters[stats.playerCharacter]['passText']))
+            print('\t\t    Would you like to play {}? (Yes/No)\n\n\n\n'.format(stats.playerCharacter))
+            print('\t\t\tUse <help> to learn how to play.')
+            print('\t\tUse <commands> to see a list of usable commands.')
+            print('----------------------------------------'\
+                  '----------------------------------------')
+            args = self.getInput()
+            self.exitMenu()
+            self.quitGame()
+            return args
+        except KeyError:
+            self.clear()
+            print("You fucked up")
+#***********************************    
+    def locationUI(self):
         self.clear()
         print('----------------------------------------'\
               '----------------------------------------')
-        print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
-        '|\n\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
-        for x in reversed(range(0,5)):
-            print('\t',consumables[x],inventory[1][x],'\n')
-        print('    Location:')
-        self.displayRoom()
-        print('\n')
+        print()
+        print()
+        print()
+        print()
         print('\t\t\tUse <help> to learn how to play.')
         print('\t\tUse <commands> to see a list of usable commands.')
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
         self.exitMenu()
+        self.quitGame()
         return args
 #**********************************    
     def mainUI(self):
@@ -180,32 +187,66 @@ class UI(stats, weapons, attatchments, rooms, char):
         print('\t\t{}: +{}'.format(*attatchments.stabalizer))
         print('\t\t{}: +{}'.format(*attatchments.extendedMag))
         print('\t\t{}     : +{}'.format(*attatchments.bolt))
-        print('\t\t{}           : +{}'.format(*attatchments.optics))
-        print('\t\t{}            : +{}'.format(*attatchments.stock))
+        print('\t\t{}   \t: +{}'.format(*attatchments.optics))
+        print('\t\t{}    \t: +{}'.format(*attatchments.stock))
         print('    Location:')
         self.displayRoom()
+        print('\t\t\tUse <help> to learn how to play.')
+        print('\t\tUse <commands> to see a list of usable commands.')
         print('----------------------------------------'\
               '----------------------------------------')
         args = self.getInput()
         self.quitGame()
         return args
-"""
-********************************
+#***********************************    
+    def inventoryUI(self):
+        self.clear()
+        print('----------------------------------------'\
+              '----------------------------------------')
+        print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
+        '|\n\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
+        for x in reversed(range(0,5)):
+            print('\t',consumables[x],inventory[1][x],'\n')
+        print('    Location:')
+        self.displayRoom()
+        print('\n')
+        print('\t\t\tUse <help> to learn how to play.')
+        print('\t\tUse <commands> to see a list of usable commands.')
+        print('----------------------------------------'\
+              '----------------------------------------')
+        args = self.getInput()
+        self.exitMenu()
+        self.quitGame()
+        return args
+
+"""*****************************
 Main Driver
-********************************
-"""
+*****************************"""
 ui = UI()
 mechanic = Mechanics()
-character = char()
-
-#command = ui.startUI()
-#character.getCharacter(command)
-#command = ui.characterUI(character.currentCharacter)
 
 while (1):
-    command = ui.mainUI()
+    while (not mechanic.playerSet and not ui.quit):
+        ui.uiReset()
+        command = ui.startUI()
+        while (not mechanic.playerSet and not ui.quit):
+            command = ui.characterUI(command)
+            if command[0] == 'yes': 
+                mechanic.playerSet = True
+            if ui.exit == True: break
+        if ui.quit == True: break    
+    if ui.quit == True: break
+    
+    while (not mechanic.locationSet):
+        command = ui.locationUI()
+        if command[0] in locationList: #if you have a one word location, the index is out of range
+            mechanic.currentLocation = command[0]
+            mechanic.locationSet = True
+        if ui.quit == True: break
     if ui.quit == True: break
 
+    if mechanic.playerSet == True: break #exit condition for main loop
+"""
     if command[0] in directions:
         mechanic.movement()
         
@@ -220,6 +261,23 @@ while (1):
         mechanic.pickUp(command)
     
     ui.uiReset()
-
+"""
 # quit screen
+ui.clear()
 print("\tThanks for playing!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -266,11 +266,111 @@ The inventory can be a 2d list.
 inventory = [[item names],
 			 [number in inventory]]
 			 
-create inventory class with inventory array, and keys for each consumable. 
+create inventory class with inventory array, and keys for each consumable.
+*****************************************************************************************
+
+The problem I'm currently trying to solve is how to navigate the various menus in main. 
+
+1) start screen - intro to the game.
+2) select character - pick a character to play from the list
+3) select location  - select your drop location.
+
+4) main game - I think fighting should be included in the main
+game in the sense that finding another team is a random event,
+with the chances of it happening increased or decreased based
+on player abilities, location, and the size of the ring.
+
+actual fighting might go like this:
+each attack the player launches has a chance of being successful,
+and a damage stat with a lower and upper range. 
+Gun attacks use bullets, and each gun has it's
+stats modified by the attatchments it has.
+
+Increases chance of successful hit: 
+	Barrel Stabalizer
+	Optics
+	Stock
+Increases max damage:	
+	shotgun bolt
+	magazine
+
+How to tell if you're in the ring and where to go.
+Example: Land in Skulltown
+The final ring will close on one of four locations in the corners of the map, chosen randomely
+I can work out which locations will be outside of the ring at each point,
+and display that. 
+
+bigger areas will have multiple parts, like skulltown would have 
+an east, west, north, south, and central area. 
+
+movement from one location to another takes a turn, as can
+an attack and response/taking cover/get high ground/looting supply bins/
+using certain abilities/respawning/reviving/team building/healing 
+
+5) team interactions - The story of the game is told at each ring, where the player
+interacts with their team mate, and gets bonuses based on how successful those interactions are, 
+with a win or loss revealing the outcome of the story. 
 
 
+##################################
+
+from the start menu, the player can type certain commands.
+
+If the player types a character name, they will be taken to\
+the character's information page.
+
+if they exit, they go back to the start menu 
+
+if they type another character, they see thier character page.
+
+if they type <select charname>, thier character is set and they choose a 
+drop location.  
+
+while playerCharacter is not set:
+	command = ui.StartUI() #start screen displays.
+	while playerCharacter is not set:
+		command = ui.characterUI(command) #displays char info page
+		if command[0] == 'select':
+			if command[1] in characters:
+				set playerCharacter = command[1]
+			else:
+				print('not a valid character')
+		if ui.exit == True: break
+########################################
+
+Next I need to work on the location screen.
+
+Locations will be split into 
 
 
+-----------------------------------------------------------------------------
+							Location Selection
+	Please open the map file called "theRing" provided with the game files. 
+	#Would you like an explanation prompt? Possible tutorial?
+	The map is split into five parts, each with different 
+	drop locations. Each of those locations has a chance to
+	encounter an enemy, and a loot rarity score, both of which
+	are ranked LOW<MEDIUM<HIGH. Type the name of the location
+	You wish to drop at.
+	REGION ONE:							REGION TWO:
+	  SLUM LAKES      ENEMIES[] LOOT[]	  RUNOFF        ENEMIES[] LOOT[]
+	  THE PIT         ENEMIES[] LOOT[]	  BUNKER        ENEMIES[] LOOT[]
+	  CONTAINMENT     ENEMIES[] LOOT[]	  AIRBASE       ENEMIES[] LOOT[]
+	
+	REGION THREE:						REGION FOUR:
+	  GAUNTLET        ENEMIES[] LOOT[]	  SWAMPS        ENEMIES[] LOOT[]
+	  MARKET          ENEMIES[] LOOT[]	  THE CAGE      ENEMIES[] LOOT[]
+	  SKULLTOWN       ENEMIES[] LOOT[]	  HYDRO DAM     ENEMIES[] LOOT[]
+	  THUNDERDOME     ENEMIES[] LOOT[]	  REPULSOR      ENEMIES[] LOOT[]
+	  WATER TREATMENT ENEMIES[] LOOT[]		
+
+	REGION FIVE:
+	  ARTILLERY       ENEMIES[] LOOT[]
+	  RELAY           ENEMIES[] LOOT[]
+	  WETLANDS        ENEMIES[] LOOT[]
+
+-----------------------------------------------------------------------------
+		Next Action: 
 
 
 

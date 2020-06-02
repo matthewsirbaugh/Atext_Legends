@@ -1,3 +1,10 @@
+locationList = ['lakes',        'containment',     'pit',    \
+                'runoff',      'bunker',          'airbase',\
+                'gauntlet',    'skull town',      'market', \
+                'thunderdome', 'treatment',       'cage',   \
+                'dam',         'repulsor',        'swamps', \
+                'wetlands',    'relay',           'artillery']
+
 locations   = {\
 'empty' : {'name': 'an empty room', 'east': 'bedroom', 'north': 'temple',
     'deftext' : '\tThe stone floors and walls are cold and damp.\n' 
@@ -18,38 +25,34 @@ locations   = {\
                 '\tin a long time. To the west is the room where you awoke, \n'
                 '\tand to the north is the torture chamber.',
     'contents': ['syringe']}}
-
-
-
-
-
+#----------------------------------------------------------------------------------------
 characterList= ['loba','bangalore']
 characters   = {\
 'loba'     :{'name'    :'Loba', 
              'passive' :'Eye For Quality', 
              'tactical':"Burglar's Best Friend",
              'ultimate':'Black Market Boutique',
-    'bio'     :'\tbiography text\n' 
-               '\tbiography text',
-    'passText':'\tpassive text\n' 
-               '\tpassive text',
+    'bio'     :'\tLbiography text\n' 
+               '\tLbiography text',
+    'passText':'\tLpassive text\n' 
+               '\t\tpassive text',
     'tactText':'\ttactical text\n' 
-               '\ttactical text',
+               '\t\ttactical text',
     'ultText' :'\tultimate text\n' 
-               '\tultimate text'},
+               '\t\tultimate text'},
 'bangalore':{'name'    :'Bangalore', 
              'passive' :'Double Time', 
              'tactical':'Smoke Launcher',
              'ultimate':'Rolling Thunder',
-    'bio'     :'\tbiography text\n' 
-               '\tbiography text',
-    'passText':'\tpassive text\n' 
+    'bio'     :'\tBbiography text\n' 
+               '\tBbiography text',
+    'passText':'\tBpassive text\n' 
                '\tpassive text',
     'tactText':'\ttactical text\n' 
                '\ttactical text',
     'ultText' :'\tultimate text\n' 
                '\tultimate text'}}
-
+#----------------------------------------------------------------------------------------
 directions  = ['north', 'south', 'east', 'west']
 
 consumables = ['Syringe:             X',
