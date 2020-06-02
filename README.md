@@ -1,8 +1,2 @@
-# Atext_Legends
-Atext Legends is a text based version of the popular battle royale shooter, Apex Legends
-
-Current to do list:
- - Add Locations
- - Add Character Select and Drop Location
- - Add Battle Mechanics
- - Add Enemies
+# Atext Legends
+***Atext Legends is a non-profit fan-based parody. Apex Legends and all characters are owned by Respawn Entertainment and Electronic Arts. Please support the game's official release.***
