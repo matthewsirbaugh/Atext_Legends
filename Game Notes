@@ -197,7 +197,9 @@ rather than altering the control-flow of the entire program.
 		dangerous King's Canyon, all while avoiding the Ring,
 		a deadly forcefield that gets smaller as you play.
 		
-		To start the game, type <start>
+		Type the name of a character to learn more about them
+		
+		To start the game, 
 		To learn more, type <help>
 		For a list of commands, type <commands>
 -------------------------------------------------------------------------------
@@ -210,7 +212,7 @@ rather than altering the control-flow of the entire program.
 
 
 This is the screen that displays after you've selected a character
--------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
 						Loba - High Society Thief 
 		
 		    When Loba was nine, she looked on as simulacrum
@@ -234,7 +236,7 @@ This is the screen that displays after you've selected a character
 			Loba opens all supply bins in the current location.
 		
 		Choose Loba? (Y/N)
--------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
 		Next Action:  
 
 
@@ -343,40 +345,150 @@ Next I need to work on the location screen.
 Locations will be split into 
 
 
------------------------------------------------------------------------------
-							Location Selection
-	Please open the map file called "theRing" provided with the game files. 
-	#Would you like an explanation prompt? Possible tutorial?
-	The map is split into five parts, each with different 
-	drop locations. Each of those locations has a chance to
-	encounter an enemy, and a loot rarity score, both of which
-	are ranked LOW<MEDIUM<HIGH. Type the name of the location
-	You wish to drop at.
-	REGION ONE:							REGION TWO:
-	  SLUM LAKES      ENEMIES[] LOOT[]	  RUNOFF        ENEMIES[] LOOT[]
-	  THE PIT         ENEMIES[] LOOT[]	  BUNKER        ENEMIES[] LOOT[]
-	  CONTAINMENT     ENEMIES[] LOOT[]	  AIRBASE       ENEMIES[] LOOT[]
+------------------------------------------------------------------------------------
+							  Location Selection
+	   Please open the map file called "theRing" provided with the game files.
 	
-	REGION THREE:						REGION FOUR:
-	  GAUNTLET        ENEMIES[] LOOT[]	  SWAMPS        ENEMIES[] LOOT[]
-	  MARKET          ENEMIES[] LOOT[]	  THE CAGE      ENEMIES[] LOOT[]
-	  SKULLTOWN       ENEMIES[] LOOT[]	  HYDRO DAM     ENEMIES[] LOOT[]
-	  THUNDERDOME     ENEMIES[] LOOT[]	  REPULSOR      ENEMIES[] LOOT[]
-	  WATER TREATMENT ENEMIES[] LOOT[]		
+	  The map is split into five parts, each with different 
+	  drop locations. Each location has a loot rarity score: 
+			Common(COM) << Average(AVG) << Rare(RAR)
+	  Be cautious, however, as locations with rarer items also
+      have a higher chance of encountering enemies!	  
+
+	      REGION ONE:	             REGION TWO:
+	  SLUM LAKES      LOOT[   ]   RUNOFF    LOOT[   ]
+	  THE PIT         LOOT[   ]   BUNKER    LOOT[MED]
+	  CONTAINMENT     LOOT[   ]   AIRBASE   LOOT[   ]
+	
+	      REGION THREE:				 REGION FOUR:
+	  GAUNTLET        LOOT[   ]	  SWAMPS    LOOT[   ]
+	  MARKET          LOOT[   ]	  THE CAGE  LOOT[   ]
+	  SKULLTOWN       LOOT[   ]	  HYDRO DAM LOOT[   ]
+	  THUNDERDOME     LOOT[   ]	  REPULSOR  LOOT[   ]
+	  WATER TREATMENT LOOT[   ]		
 
 	REGION FIVE:
-	  ARTILLERY       ENEMIES[] LOOT[]
-	  RELAY           ENEMIES[] LOOT[]
-	  WETLANDS        ENEMIES[] LOOT[]
+	  ARTILLERY       LOOT[   ]
+	  RELAY           LOOT[   ]
+	  WETLANDS        LOOT[   ]
 
------------------------------------------------------------------------------
+
+			          Type the name of a location to drop there.
+
+
+                           Use <help> to learn how to play.
+					Use <commands> to see a list of usable commands
+------------------------------------------------------------------------------------
 		Next Action: 
+*****************************************************************************
+    To do: 6/3/2020
+	
+	So far I have defined the map, implemented
+	the character select and location menus, and implemented
+	a method to pick up items, and access inventory.
+	I've also created the main UI.
+	
+	After character and location selection, the game consists of
+	just modifications to the main screen, except during team
+	building. 
+	
+ # I still need to fill in the location information.
+ # I still need to 
+
+****************************************************************************
+
+I can center the text in the libraries using .format.
+I can add the ui elements to a library and that should clean up the 
+code a bit. 
+
+The naming schema for directions is like this:
+************************************************************
+LAKES
+____________________________________________________________
+
+You're in Slum Lakes, a large town of shacks chock full of
+tasty loot. Fights here are close quarters, with a 10% buff
+to shotguns and a 10% nerf to snipers.
+
+______"So anyway, I started blastin'" - Frank Reynolds______  
+ 
+*********************************************************************************************************
+RUNOFF
+************************************************************
 
 
+____________________________________________________________
+
+BUNKER
+************************************************************
 
 
+____________________________________________________________
+
+AIRBASE
+************************************************************
 
 
+____________________________________________________________
+*********************************************************************************************************
+GAUNTLET
+************************************************************
+
+
+____________________________________________________________
+MARKET
+************************************************************
+
+
+____________________________________________________________
+
+THUNDERDOME
+************************************************************
+
+
+____________________________________________________________
+TREATMENT
+************************************************************
+
+
+____________________________________________________________
+*********************************************************************************************************
+CAGE
+************************************************************
+
+
+____________________________________________________________
+REPULSOR
+************************************************************
+
+
+____________________________________________________________
+DAM
+************************************************************
+
+
+____________________________________________________________
+SWAMPS
+************************************************************
+
+
+____________________________________________________________
+*********************************************************************************************************
+WETLANDS
+************************************************************
+
+
+____________________________________________________________
+RELAY
+************************************************************
+
+
+____________________________________________________________
+ARTILLERY
+************************************************************
+
+
+____________________________________________________________
 
 
 

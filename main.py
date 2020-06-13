@@ -52,8 +52,8 @@ class attatchments:
 class Mechanics(stats, rooms):
     def movement(self):
         if stats.command in directions:
-            if stats.command in locations[rooms.currentRoom]:
-                rooms.currentRoom = locations[rooms.currentRoom][stats.command]
+            if stats.command in locations[stats.currentLocation]:
+                stats.currentLocation = locations[stats.currentLocation][stats.command]
         else:
             print("You can't go that way, friend.")
 
@@ -80,6 +80,10 @@ class UI(stats, weapons, attatchments, rooms):
     def clear(self):
         if name == 'nt': 
             _ = system('cls')
+            
+    def centerText(self, text):
+        lines = text.split('\n')
+        return '\n'.join(line.center(86) for line in lines)
        
     def quitGame(self):
         if stats.command == 'quit' or stats.command == 'q':
@@ -96,34 +100,31 @@ class UI(stats, weapons, attatchments, rooms):
             if args[1] in locationList: # script has the locations set to the
                 args[0] = args[1]       # last word if the location has two words 
                 return args
-        except IndexError: # otherwise it will throw an error
+        except IndexError: # otherwise it will throw an error and pass arguments as typed
             pass
         return args
     
     def displayRoom(self):
-        print('\tYou are in {}.'.format(locations[rooms.currentRoom]['name']))
-        print(locations[rooms.currentRoom][rooms.currentText])
+        print(self.centerText('{}'.format(locations[stats.currentLocation]['name'])))
+        print(self.centerText(locations[stats.currentLocation][rooms.currentText]))
 #***********************************    
     def startUI(self):
         self.clear()
-        print('----------------------------------------'\
-              '----------------------------------------')
-        print('\t\t\tWelcome to Atext Legends!\n')
-        print('\t    Atext Legends is the ultimate test of strength, skill,\n',
-              '\tand cunning. You must work with your team to outrun\n',
-              '\tthe Ring, claim glory on the battlefield, and earn your\n',
-              '\tplace in the Hall of Legends.')
-        print('\t    To begin, select a character to learn about thier\n',
-              '\tabilities, and confirm your selection to board the\n',
-              '\tdrop ship and enter the arena!\n')      
-        print('    Loba:')
-        print('{}\n'.format(characters['loba']['bio']))
-        print('    Bangalore:')
-        print('{}\n'.format(characters['bangalore']['bio']))
-        print('\t\t\tUse <help> to learn how to play.')
-        print('\t\tUse <commands> to see a list of usable commands.')
-        print('----------------------------------------'\
-              '----------------------------------------')
+        print('-------------------------------------------'\
+              '-------------------------------------------')
+        print(self.centerText('Welcome to Atext Legends!\n'))
+        print(self.centerText('To begin, select a character to learn about thier\n'\
+              'abilities, and confirm your selection to board the\n'\
+              'drop ship and enter the arena!\n'))      
+        print(self.centerText('|-----------|------------|------------|'))
+        print(self.centerText('|    Loba   | Pathfinder |   Octane   |'))
+        print(self.centerText('|-----------|------------|------------|'))
+        print(self.centerText('| Bangalore |  Lifeline  | Bloodhound |'))
+        print(self.centerText('|-----------|------------|------------|\n'))
+        print(self.centerText('Use <help> to learn how to play'))
+        print(self.centerText('Use <commands> to see a list of usable commands'))
+        print('-------------------------------------------'\
+              '-------------------------------------------')
         args = self.getInput()
         self.quitGame()
         return args
@@ -133,17 +134,24 @@ class UI(stats, weapons, attatchments, rooms):
             self.clear()
             if args[0] in characterList:
                 stats.playerCharacter = args[0]
-            print('----------------------------------------'\
-                  '----------------------------------------')
-            print('\t\t\t{}\n'.format(characters[stats.playerCharacter]['name']))
+            print('-------------------------------------------'\
+                  '-------------------------------------------')
+            print(self.centerText(characters[stats.playerCharacter]['name']))
+            print(self.centerText('{}\n'.format(characters[stats.playerCharacter]['bio']))) 
+
             print('    Ultimate: {}\n'.format(characters[stats.playerCharacter]['ultText' ]))
             print('    Tactical: {}\n'.format(characters[stats.playerCharacter]['tactText']))
             print('    Passive:  {}\n\n\n'.format(characters[stats.playerCharacter]['passText']))
-            print('\t\t    Would you like to play {}? (Yes/No)\n\n\n\n'.format(stats.playerCharacter))
-            print('\t\t\tUse <help> to learn how to play.')
-            print('\t\tUse <commands> to see a list of usable commands.')
-            print('----------------------------------------'\
-                  '----------------------------------------')
+            print(self.centerText('Would you like to play as {}?\n'.format(stats.playerCharacter)))
+            print(self.centerText('|-----------|------------|------------|'))
+            print(self.centerText('|    Loba   | Pathfinder |   Octane   |'))
+            print(self.centerText('|-----------|------------|------------|'))
+            print(self.centerText('| Bangalore |  Lifeline  | Bloodhound |'))
+            print(self.centerText('|-----------|------------|------------|\n'))
+            print(self.centerText('Use <help> to learn how to play'))
+            print(self.centerText('Use <commands> to see a list of usable commands'))
+            print('-------------------------------------------'\
+                  '-------------------------------------------')
             args = self.getInput()
             self.exitMenu()
             self.quitGame()
@@ -154,16 +162,42 @@ class UI(stats, weapons, attatchments, rooms):
 #***********************************    
     def locationUI(self):
         self.clear()
-        print('----------------------------------------'\
-              '----------------------------------------')
+        print('-------------------------------------------'\
+              '-------------------------------------------')
+        print(self.centerText('Location Selection\n'))
+        print(self.centerText('The map is split into five parts, each with different '\
+              'drop locations.\nEach location has a loot rarity score:\n'\
+              'Common[COM] << Average[AVG] << Rare[RAR]\n'\
+              'Be cautious, however, as locations with rarer items\n'\
+              'also have a higher chance of encountering enemies!\n\n'))
+        print(self.centerText('     REGION ONE                 REGION TWO'))
+        print(self.centerText('SLUM LAKES  LOOT[{}]    RUNOFF     LOOT[{}]'\
+              .format(locationList['lakes'],locationList['runoff'])))
+        print(self.centerText('THE PIT     LOOT[{}]\t    BUNKER     LOOT[{}]'\
+              .format(locationList['pit'],locationList['bunker'])))
+        print(self.centerText('CONTAINMENT LOOT[{}]    AIRBASE    LOOT[{}]\n'\
+              .format(locationList['containment'],locationList['airbase'])))
+        print(self.centerText('     REGION THREE                REGION FOUR'))
+        print(self.centerText('GAUNTLET    LOOT[{}]    SWAMPS     LOOT[{}]'\
+              .format(locationList['gauntlet'],locationList['swamps'])))
+        print(self.centerText('MARKET      LOOT[{}]    THE CAGE   LOOT[{}]'\
+              .format(locationList['market'],locationList['cage'])))
+        print(self.centerText('SKULL TOWN  LOOT[{}]    HYDRO DAM  LOOT[{}]'\
+              .format(locationList['town'],locationList['dam'])))
+        print(self.centerText('THUNDERDOME LOOT[{}]    REPULSOR   LOOT[{}]'\
+              .format(locationList['thunderdome'],locationList['repulsor'])))
+        print('\t\t     WATER TREATMENT LOOT[{}]\n'.format(locationList['treatment']))
+        print(self.centerText('REGION FIVE'))
+        print(self.centerText('ARTILLERY   LOOT[{}]'.format(locationList['artillery'])))
+        print(self.centerText('RELAY       LOOT[{}]'.format(locationList['relay'])))
+        print(self.centerText('WETLANDS    LOOT[{}]'.format(locationList['wetlands'])))
         print()
+        print(self.centerText('Type the name of a location to drop there'))
         print()
-        print()
-        print()
-        print('\t\t\tUse <help> to learn how to play.')
-        print('\t\tUse <commands> to see a list of usable commands.')
-        print('----------------------------------------'\
-              '----------------------------------------')
+        print(self.centerText('Use <help> to learn how to play'))
+        print(self.centerText('Use <commands> to see a list of usable commands'))
+        print('-------------------------------------------'\
+              '-------------------------------------------')
         args = self.getInput()
         self.exitMenu()
         self.quitGame()
@@ -171,49 +205,50 @@ class UI(stats, weapons, attatchments, rooms):
 #**********************************    
     def mainUI(self):
         self.clear()
-        print('----------------------------------------'\
-              '----------------------------------------')
-        print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
-        '|\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn)) 
-        print('    Weapons:')
-        print('\t{} - {} Rounds'.format(weapons.gun[stats.weapon0[0]][stats.weapon0[1]], stats.ammo0))
-        print('\t\t{}: +{}'.format(*attatchments.stabalizer))
-        print('\t\t{}: +{}'.format(*attatchments.extendedMag))
-        print('\t\t{}     : +{}'.format(*attatchments.bolt))
-        print('\t\t{}           : +{}'.format(*attatchments.optics))
-        print('\t\t{}            : +{}'.format(*attatchments.stock))
+        print('-------------------------------------------'\
+              '-------------------------------------------')
+        print(self.centerText('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
+        '|\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))) 
+        print(self.centerText('   WEAPONS'))
+        print(self.centerText('  {} - {} Rounds\t        {} - {} Rounds\t     '\
+        .format(weapons.gun[stats.weapon0[0]][stats.weapon0[1]], stats.ammo0,
+                weapons.gun[stats.weapon1[0]][stats.weapon1[1]], stats.ammo1)))
+        print(self.centerText(' {}: +{}\t{}: +{}    '.format(*attatchments.stabalizer, 
+                                                         *attatchments.stabalizer)))
+        print(self.centerText(' {}: +{}\t{}: +{}    '.format(*attatchments.extendedMag,
+                                                        *attatchments.extendedMag)))
+        print(self.centerText(' {}: +{}\t{}: +{}    '.format(*attatchments.bolt,       
+                                                             *attatchments.bolt)))
+        print(self.centerText(' {}: +{}\t{}: +{}    '.format(*attatchments.optics,     
+                                                         *attatchments.optics)))
+        print(self.centerText(' {}: +{}\t{}: +{}    '.format(*attatchments.stock,      
+                                                         *attatchments.stock)))
         print()
-        print('\t{} - {} Rounds'.format(weapons.gun[stats.weapon1[0]][stats.weapon1[1]], stats.ammo0))
-        print('\t\t{}: +{}'.format(*attatchments.stabalizer))
-        print('\t\t{}: +{}'.format(*attatchments.extendedMag))
-        print('\t\t{}     : +{}'.format(*attatchments.bolt))
-        print('\t\t{}   \t: +{}'.format(*attatchments.optics))
-        print('\t\t{}    \t: +{}'.format(*attatchments.stock))
-        print('    Location:')
         self.displayRoom()
-        print('\t\t\tUse <help> to learn how to play.')
-        print('\t\tUse <commands> to see a list of usable commands.')
-        print('----------------------------------------'\
-              '----------------------------------------')
+        print()
+        print(self.centerText('Use <help> to learn how to play'))
+        print(self.centerText('Use <commands> to see a list of usable commands'))
+        print('-------------------------------------------'\
+              '-------------------------------------------')
         args = self.getInput()
         self.quitGame()
         return args
 #***********************************    
     def inventoryUI(self):
         self.clear()
-        print('----------------------------------------'\
-              '----------------------------------------')
-        print('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
-        '|\n\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn))
+        print('-------------------------------------------'\
+              '-------------------------------------------')
+        print(self.centerText('| Health: {} | Shield {} | Tactical: {} | Ultimate: {} | Ring: {} | Turn {} '\
+        '|\n'.format(stats.health, stats.shield, stats.tactical, stats.ultimate, stats.ring, stats.turn)))
         for x in reversed(range(0,5)):
             print('\t',consumables[x],inventory[1][x],'\n')
-        print('    Location:')
+        print()
         self.displayRoom()
         print('\n')
-        print('\t\t\tUse <help> to learn how to play.')
-        print('\t\tUse <commands> to see a list of usable commands.')
-        print('----------------------------------------'\
-              '----------------------------------------')
+        print(self.centerText('Use <help> to learn how to play'))
+        print(self.centerText('Use <commands> to see a list of usable commands'))
+        print('-------------------------------------------'\
+              '-------------------------------------------')
         args = self.getInput()
         self.exitMenu()
         self.quitGame()
@@ -223,7 +258,10 @@ class UI(stats, weapons, attatchments, rooms):
 Main Driver
 *****************************"""
 ui = UI()
-mechanic = Mechanics()
+mechanic = Mechanics() 
+# Need to use stats for data members which means 
+# I need to change stats to Statistics and create 
+# an object. 
 
 while (1):
     while (not mechanic.playerSet and not ui.quit):
@@ -239,13 +277,22 @@ while (1):
     
     while (not mechanic.locationSet):
         command = ui.locationUI()
-        if command[0] in locationList: #if you have a one word location, the index is out of range
-            mechanic.currentLocation = command[0]
+        if command[0] in locationList: 
+            stats.currentLocation = command[0]
             mechanic.locationSet = True
         if ui.quit == True: break
     if ui.quit == True: break
 
-    if mechanic.playerSet == True: break #exit condition for main loop
+    while (not ui.quit):
+        ui.uiReset()
+        command = ui.mainUI()
+        if command[0] in directions:
+            mechanic.movement()
+        if ui.quit == True: break
+    
+    if ui.quit == True: break #breaks out of wrapping loop. 
+
+#if mechanic.playerSet == True: break #exit condition for main loop
 """
     if command[0] in directions:
         mechanic.movement()
